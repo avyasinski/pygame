@@ -36,6 +36,12 @@ def main(x, y):
     dog_image.set_colorkey((255, 255, 255))
     dog_x = 200
     dog_y = 600
+    # poop & pee
+    poop = pygame.transform.scale(pygame.image.load('poop.png').convert_alpha(), (50, 50))
+    poop_coordinates = []
+    pee = pygame.transform.scale(pygame.image.load('pee.png').convert_alpha(), (100, 50))
+    pee.set_colorkey((255, 255, 255))
+    pee_coordinates = []
     # Set the number of clouds and random coordinates of their appearance
     cloud_coordinate_list = []
     for i in range(20):
@@ -48,6 +54,12 @@ def main(x, y):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            # making poop
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    poop_coordinates.append((dog_x + 15, dog_y + 60))
+                if event.key == pygame.K_x:
+                    pee_coordinates.append((dog_x + 15, dog_y + 60))
         # Dog control
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT] == True:
@@ -86,6 +98,10 @@ def main(x, y):
         banner(flypos_x, 200, screen, colors)
         screen.blit(text, (flypos_x + 260, 250))
         screen.blit(plane_image, (flypos_x, 200))
+        for p_c in pee_coordinates:
+            screen.blit(pee, p_c)
+        for p_c in poop_coordinates:
+            screen.blit(poop, p_c)
         screen.blit(dog_image, (dog_x, dog_y))
         # Borders for the dog where it can move
         if dog_y < y * 0.6 - 100:
