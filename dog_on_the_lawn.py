@@ -23,7 +23,9 @@ def main(x, y):
         }
     # Set text
     font = pygame.font.Font(None, 32)
+    font_b = pygame.font.Font(None, 22)
     text = font.render('Move the dog with the keyboard arrows!', True, colors['palevioletred'])
+    text_bottom = font_b.render('To poop press "SPACE", to pee press "ALT"', True, colors['saddlebrown'])
     flypos_x = x
     flypos_y = y / 2 - 150
     # Load plane png
@@ -58,7 +60,7 @@ def main(x, y):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     poop_coordinates.append((dog_x + 15, dog_y + 60))
-                if event.key == pygame.K_x:
+                if event.key == pygame.K_LALT or event.key == pygame.K_RALT:
                     pee_coordinates.append((dog_x + 15, dog_y + 60))
         # Dog control
         keys = pygame.key.get_pressed()
@@ -97,6 +99,7 @@ def main(x, y):
                 cloud_coordinate_list.insert([i][0], (-75, y_save))
         banner(flypos_x, 200, screen, colors)
         screen.blit(text, (flypos_x + 260, 250))
+        screen.blit(text_bottom, (700, 750))
         screen.blit(plane_image, (flypos_x, 200))
         for p_c in pee_coordinates:
             screen.blit(pee, p_c)
